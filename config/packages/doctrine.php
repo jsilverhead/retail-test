@@ -1,5 +1,6 @@
 <?php
 
+use App\Infrastructure\Doctrine\Types\PriceType;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\DoctrineConfig;
 
@@ -16,6 +17,8 @@ return static function (ContainerConfigurator $container, DoctrineConfig $doctri
         ->useSavepoints(true);
 
     $doctrine->orm()->autoGenerateProxyClasses(param('kernel.debug'));
+
+    $dbal->type('price')->class(PriceType::class);
 
     $entityManager = $doctrine->orm()->entityManager($connectionName);
     $entityManager->namingStrategy('doctrine.orm.naming_strategy.underscore_number_aware')->autoMapping(true);

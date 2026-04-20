@@ -71,7 +71,7 @@
     }
   },
   "require-dev": {
-    "dama/doctrine-test-bundle": "^8.6",
+    "dama/doctrine-test-bundle": "*",
     "friendsofphp/php-cs-fixer": "*",
     "phpunit/phpunit": "^12.5",
     "psalm/plugin-phpunit": "*",

@@ -12,5 +12,7 @@ return static function (ContainerConfigurator $container): void {
     $container->import('infrastructure/*/*.php');
     $container->import('infrastructure/*/*/*.php');
 
-    $container->import('packages/dama_doctrine_test.php');
+    if ($container->env() === 'test') {
+        $container->import('packages/test/*.php');
+    }
 };

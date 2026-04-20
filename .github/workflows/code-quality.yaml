@@ -51,11 +51,11 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install
-        working-directory: ./app/
+        working-directory: .
 
       - name: Lint with PHP-CS-Fixer
         run: vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --verbose
-        working-directory: ./app/
+        working-directory: .
 
   psalm:
     name: Psalm
@@ -101,12 +101,12 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install
-        working-directory: ./app/
+        working-directory: .
 
       - name: Warmup Symfony container
         run: bin/console cache:warmup --no-interaction --env=test
-        working-directory: ./app/
+        working-directory: .
 
       - name: Analyze with Psalm
         run: vendor/bin/psalm --output-format=github
-        working-directory: ./app/
+        working-directory: .

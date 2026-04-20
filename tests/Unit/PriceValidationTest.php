@@ -7,17 +7,31 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PriceValidationTest extends WebTestCase
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+final class PriceValidationTest extends WebTestCase
 {
     /**
-     * @psalm-return list<array<non-empty-string>>
+     * @psalm-param array{euro: int, penny: int} $payload
      */
-    public static function provideSuccessfulCreatingCases(): iterable
+    #[DataProvider('providePennySuccessCases')]
+    public function testPennySuccess(array $payload): void
     {
-        return [[['euro' => 120, 'penny' => 0]], [['euro' => 0, 'penny' => 50]]];
+        $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
+        $validator = $this->getContainer()->get(ValidatorInterface::class);
+
+        $violations = $validator->validate($price);
+
+        self::assertTrue($violations->count() > 0);
     }
 
-    public static function provideUnsuccessfulCreatingCases(): iterable
+    /**
+     * @psalm-return iterable<array-key, array{0: array{euro: int, penny: int}}>
+     */
+    public static function providePennySuccessCases(): iterable
     {
         return [
             [['euro' => 10, 'penny' => 120]],
@@ -27,7 +41,10 @@ class PriceValidationTest extends WebTestCase
         ];
     }
 
-    #[DataProvider('provideSuccessfulCreatingCases')]
+    /**
+     * @psalm-param array{euro: int, penny: int} $payload
+     */
+    #[DataProvider('provideSuccessCases')]
     public function testSuccess(array $payload): void
     {
         $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
@@ -35,17 +52,14 @@ class PriceValidationTest extends WebTestCase
 
         $violations = $validator->validate($price);
 
-        $this->assertCount(0, $violations);
+        self::assertCount(0, $violations);
     }
 
-    #[DataProvider('provideUnsuccessfulCreatingCases')]
-    public function testPennySuccess(array $payload): void
+    /**
+     * @psalm-return iterable<array-key, array{0: array{euro: int, penny: int}}>
+     */
+    public static function provideSuccessCases(): iterable
     {
-        $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
-        $validator = $this->getContainer()->get(ValidatorInterface::class);
-
-        $violations = $validator->validate($price);
-
-        $this->assertTrue($violations->count() > 0);
+        return [[['euro' => 120, 'penny' => 0]], [['euro' => 0, 'penny' => 50]]];
     }
 }

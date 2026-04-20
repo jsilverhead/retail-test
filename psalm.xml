@@ -13,6 +13,7 @@
         findUnusedPsalmSuppress="true"
         ensureArrayStringOffsetsExist="true"
         ensureArrayIntOffsetsExist="true"
+        ensureOverrideAttribute="false"
         findUnusedCode="true"
         findUnusedBaselineEntry="false"
 >

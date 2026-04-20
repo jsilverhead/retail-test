@@ -1,7 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" name="Doctrine: create database" type="PhpLocalRunConfigurationType"
-                   factoryName="PHP Console" folderName="Doctrine" path="$PROJECT_DIR$/bin/console"
-                   scriptParameters="doctrine:database:create --no-interaction --env=test">
-        <method v="2"/>
-    </configuration>
+  <configuration default="false" name="Doctrine: create database" type="PhpLocalRunConfigurationType" factoryName="PHP Console" folderName="Doctrine" path="$PROJECT_DIR$/bin/console" scriptParameters="doctrine:database:create --no-interaction --env=test">
+    <CommandLine>
+      <PhpTestInterpreterSettings>
+        <option name="interpreterName" value="sio_test" />
+      </PhpTestInterpreterSettings>
+    </CommandLine>
+    <method v="2" />
+  </configuration>
 </component>

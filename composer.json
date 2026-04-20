@@ -72,8 +72,13 @@
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "^8.6",
+    "friendsofphp/php-cs-fixer": "*",
     "phpunit/phpunit": "^12.5",
+    "psalm/plugin-phpunit": "*",
+    "psalm/plugin-symfony": "*",
     "symfony/browser-kit": "6.4.*",
-    "symfony/css-selector": "6.4.*"
+    "symfony/css-selector": "6.4.*",
+    "vimeo/psalm": "*",
+    "weirdan/doctrine-psalm-plugin": "*"
   }
 }

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run Psalm without cache" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/app/vendor/bin/psalm" scriptParameters="--no-cache --output-format=phpstorm">
+  <configuration default="false" name="Run Psalm without cache" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/vendor/bin/psalm" scriptParameters="--no-cache --output-format=phpstorm">
     <CommandLine workingDirectory="$PROJECT_DIR$/">
       <PhpTestInterpreterSettings>
         <option name="interpreterName" value="sio_test" />

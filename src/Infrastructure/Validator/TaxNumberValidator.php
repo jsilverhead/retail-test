@@ -33,8 +33,6 @@ final class TaxNumberValidator
             throw new InvalidArgumentException('Country code not supported');
         }
 
-        $this->validateTaxNumber(taxNumber: $taxNumber, country: $country);
-
         return $country;
     }
 

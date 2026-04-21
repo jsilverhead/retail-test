@@ -19,7 +19,7 @@ final class CreateWareServiceTest extends WebTestCase
     public function testNameAlreadyExistsFail(): void
     {
         $name = 'iPhone';
-        $price = new Price(euro: 100, penny: 0);
+        $price = new Price(euro: 100, cent: 0);
         $dto = new CreateWareDto(name: $name, price: $price);
 
         $builder = $this->getContainer()->get(WareBuilder::class);
@@ -34,7 +34,7 @@ final class CreateWareServiceTest extends WebTestCase
     public function testSuccess(): void
     {
         $name = 'iPhone';
-        $price = new Price(euro: 100, penny: 0);
+        $price = new Price(euro: 100, cent: 0);
         $dto = new CreateWareDto(name: $name, price: $price);
 
         $service = $this->getContainer()->get(CreateWareService::class);

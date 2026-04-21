@@ -35,10 +35,10 @@ final class PriceType extends Type
             throw new InvalidArgumentException('Value cannot be empty');
         }
 
-        /** @psalm-var array{euro: int<0,max>, penny: int<0,99>} $decodedValue */
+        /** @psalm-var array{euro: int<0,max>, cent: int<0,99>} $decodedValue */
         $decodedValue = json_decode(json: $value, associative: true, depth: 512, flags: \JSON_THROW_ON_ERROR);
 
-        return new Price(euro: $decodedValue['euro'], penny: $decodedValue['penny']);
+        return new Price(euro: $decodedValue['euro'], cent: $decodedValue['cent']);
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string

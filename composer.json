@@ -71,6 +71,7 @@
     }
   },
   "require-dev": {
+    "composer/xdebug-handler": "^3.0",
     "dama/doctrine-test-bundle": "*",
     "friendsofphp/php-cs-fixer": "*",
     "phpunit/phpunit": "^12.5",

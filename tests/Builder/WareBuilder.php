@@ -21,13 +21,10 @@ final class WareBuilder
     ) {
     }
 
-    /**
-     * @psalm-suppress PossiblyUnusedReturnValue
-     */
     public function build(): Ware
     {
         $name = $this->name ?? uniqid('ware_', true);
-        $price = $this->price ?? new Price(euro: 100, penny: 0);
+        $price = $this->price ?? new Price(euro: 100, cent: 0);
         $dto = new CreateWareDto(name: $name, price: $price);
 
         $ware = $this->createWareService->create($dto);
@@ -43,6 +40,13 @@ final class WareBuilder
     public function withName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function withPrice(Price $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

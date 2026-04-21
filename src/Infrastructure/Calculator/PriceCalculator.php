@@ -7,7 +7,6 @@ use App\Domain\Coupon\Enum\CodeTypeEnum;
 use App\Domain\Ware\ValueObject\Price;
 use App\Domain\Ware\Ware;
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
-use Exception;
 use LogicException;
 
 final class PriceCalculator
@@ -27,13 +26,7 @@ final class PriceCalculator
 
     private function addTaxRate(int $cents, CountriesWithTaxEnum $county): int
     {
-        $rate = match ($county) {
-            CountriesWithTaxEnum::DE => 0.19,
-            CountriesWithTaxEnum::IT => 0.22,
-            CountriesWithTaxEnum::FR => 0.2,
-            CountriesWithTaxEnum::GR => 0.24,
-            default => throw new Exception('Unsupported country'),
-        };
+        $rate = $county->getTaxRate();
 
         $centsFloat = (float) $cents;
 

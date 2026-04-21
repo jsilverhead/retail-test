@@ -28,15 +28,13 @@ final class PriceCalculatorTest extends WebTestCase
         $price = new Price(euro: 100, cent: 0);
         $ware = $wareBuilder->withPrice($price)->build();
 
-        /** @psalm-var int $fixedValue */
-        $fixedValue = $coupon->getFixedValue();
-        $cents = $price->toCents();
-        $centsWithCoupon = $cents - $fixedValue * 100;
-        $centsWithTax = (int) ((float) $centsWithCoupon + (float) $centsWithCoupon * 0.19);
-        $total = Price::fromCents($centsWithTax);
+        $expectedEuro = 101;
+        $expectedCent = 15;
+
         $calculatedTotal = $calculator->calculate(ware: $ware, coupon: $coupon, country: $country);
 
-        self::assertSame(expected: $total->euro, actual: $calculatedTotal->euro);
+        self::assertSame(expected: $expectedEuro, actual: $calculatedTotal->euro);
+        self::assertSame(expected: $expectedCent, actual: $calculatedTotal->cent);
     }
 
     public function testWithGreeceCountryAndPercentageCouponSuccess(): void
@@ -50,19 +48,13 @@ final class PriceCalculatorTest extends WebTestCase
         $price = new Price(euro: 100, cent: 0);
         $ware = $wareBuilder->withPrice($price)->build();
 
-        /** @psalm-var int $percents */
-        $percents = $coupon->getPercentage();
-        $floatPercents = (float) $percents;
-
-        $cents = (float) $ware->getPrice()->toCents();
-        $centsWithCoupon = (int) round($cents * (1.0 - $floatPercents / 100.0));
-        $centsWithTax = (int) round((float) $centsWithCoupon * (1.0 + 0.24));
-        $expectedTotal = Price::fromCents($centsWithTax);
+        $expectedEuro = 116;
+        $expectedCents = 56;
 
         $calculatedTotal = $calculator->calculate(ware: $ware, coupon: $coupon, country: $country);
 
-        self::assertSame(expected: $expectedTotal->euro, actual: $calculatedTotal->euro);
-        self::assertSame(expected: $expectedTotal->cent, actual: $calculatedTotal->cent);
+        self::assertSame(expected: $expectedEuro, actual: $calculatedTotal->euro);
+        self::assertSame(expected: $expectedCents, actual: $calculatedTotal->cent);
     }
 
     public function testWithGreeceCountryWithoutCouponSuccess(): void
@@ -74,11 +66,11 @@ final class PriceCalculatorTest extends WebTestCase
         $price = new Price(euro: 100, cent: 0);
         $ware = $wareBuilder->withPrice($price)->build();
 
-        $cents = (float) $ware->getPrice()->toCents();
-        $centsWithTax = (int) round($cents * (1.0 + 0.24));
-        $expectedTotal = Price::fromCents($centsWithTax);
+        $expectedEuro = 124;
+        $expectedCents = 0;
 
         $calculatedTotal = $calculator->calculate(ware: $ware, coupon: null, country: $country);
-        self::assertSame(expected: $expectedTotal->euro, actual: $calculatedTotal->euro);
+        self::assertSame(expected: $expectedEuro, actual: $calculatedTotal->euro);
+        self::assertSame(expected: $expectedCents, actual: $calculatedTotal->cent);
     }
 }

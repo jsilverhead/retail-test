@@ -6,15 +6,20 @@ use App\Domain\Ware\Exception\WareWithThisNameAlreadyExistsException;
 use App\Domain\Ware\Repository\WareRepositoryInterface;
 use App\Domain\Ware\Service\Dto\CreateWareDto;
 use App\Domain\Ware\Ware;
+use App\Infrastructure\Validator\DataValidatorInterface;
 
 final readonly class CreateWareService
 {
-    public function __construct(private WareRepositoryInterface $repository)
-    {
+    public function __construct(
+        private WareRepositoryInterface $repository,
+        private DataValidatorInterface $validator,
+    ) {
     }
 
     public function create(CreateWareDto $dto): Ware
     {
+        $this->validator->validate($dto);
+
         if (null !== $this->repository->getByName($dto->name)) {
             throw new WareWithThisNameAlreadyExistsException();
         }

@@ -3,22 +3,22 @@
 namespace App\Tests\Unit;
 
 use App\Domain\Ware\ValueObject\Price;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversClass(Price::class)]
 final class PriceValidationTest extends WebTestCase
 {
     /**
      * @psalm-param array{euro: int, penny: int} $payload
      */
-    #[DataProvider('providePennySuccessCases')]
-    public function testPennySuccess(array $payload): void
+    #[DataProvider('provideFailCases')]
+    public function testFail(array $payload): void
     {
         $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
         $validator = $this->getContainer()->get(ValidatorInterface::class);
@@ -31,7 +31,7 @@ final class PriceValidationTest extends WebTestCase
     /**
      * @psalm-return iterable<array-key, array{0: array{euro: int, penny: int}}>
      */
-    public static function providePennySuccessCases(): iterable
+    public static function provideFailCases(): iterable
     {
         return [
             [['euro' => 10, 'penny' => 120]],

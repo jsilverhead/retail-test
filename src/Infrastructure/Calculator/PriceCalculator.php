@@ -56,6 +56,6 @@ final class PriceCalculator
             return (int) round($centsFloat * (1.0 - $percentage / 100.0));
         }
 
-        throw new LogicException('Unsupported coupon');
+        throw new LogicException('Unsupported coupon type');
     }
 }

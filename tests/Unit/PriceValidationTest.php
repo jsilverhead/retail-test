@@ -20,7 +20,7 @@ final class PriceValidationTest extends WebTestCase
     #[DataProvider('provideFailCases')]
     public function testFail(array $payload): void
     {
-        $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
+        $price = new Price(euro: $payload['euro'], cent: $payload['penny']);
         $validator = $this->getContainer()->get(ValidatorInterface::class);
 
         $violations = $validator->validate($price);
@@ -47,7 +47,7 @@ final class PriceValidationTest extends WebTestCase
     #[DataProvider('provideSuccessCases')]
     public function testSuccess(array $payload): void
     {
-        $price = new Price(euro: $payload['euro'], penny: $payload['penny']);
+        $price = new Price(euro: $payload['euro'], cent: $payload['penny']);
         $validator = $this->getContainer()->get(ValidatorInterface::class);
 
         $violations = $validator->validate($price);

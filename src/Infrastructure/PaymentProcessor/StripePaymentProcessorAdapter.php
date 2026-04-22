@@ -15,8 +15,7 @@ final readonly class StripePaymentProcessorAdapter implements PaymentProcessorIn
 
     public function process(Price $price): void
     {
-        $amount = $price->toFloat();
-        $processed = $this->stripePaymentProcessor->processPayment($amount);
+        $processed = $this->stripePaymentProcessor->processPayment($price->toFloat());
 
         if (!$processed) {
             throw new ProcessPaymentFailedException();

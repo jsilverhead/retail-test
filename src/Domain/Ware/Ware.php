@@ -27,9 +27,6 @@ final class Ware
         $this->price = $price;
     }
 
-    /**
-     * @psalm-suppress PossiblyUnusedMethod
-     */
     public function getId(): int
     {
         return $this->id;

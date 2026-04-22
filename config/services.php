@@ -1,8 +1,11 @@
 <?php
 
+use App\Infrastructure\Validator\CountryExtractor;
+use App\Infrastructure\Validator\TaxNumberValidator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -19,4 +22,9 @@ return static function (ContainerConfigurator $container): void {
     }
 
     $services->load('App\Tests\Builder\\', param('kernel.project_dir')->__toString() . '/tests/Builder')->public();
+
+    $services
+        ->set(TaxNumberValidator::class)
+        ->args([service(CountryExtractor::class)])
+        ->tag('validator.constraint_validator');
 };

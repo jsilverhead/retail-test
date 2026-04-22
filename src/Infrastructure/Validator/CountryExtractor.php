@@ -3,9 +3,9 @@
 namespace App\Infrastructure\Validator;
 
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
-use InvalidArgumentException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-final class CountryExtractor
+final class CountryExtractor implements CountryExtractorInterface
 {
     public function extractCountry(string $taxNumber): CountriesWithTaxEnum
     {
@@ -15,6 +15,6 @@ final class CountryExtractor
             }
         }
 
-        throw new InvalidArgumentException('Country code not supported');
+        throw new BadRequestHttpException('Country code not supported');
     }
 }

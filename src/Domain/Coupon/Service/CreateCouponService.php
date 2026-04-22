@@ -6,7 +6,7 @@ use App\Domain\Coupon\Coupon;
 use App\Domain\Coupon\Exception\CouponWithThisNameAlreadyExistsException;
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
 use App\Domain\Coupon\Service\Dto\CreateCouponDto;
-use App\Infrastructure\Validator\DataValidatorInterface;
+use App\Domain\Ware\Service\DataValidatorInterface;
 
 final readonly class CreateCouponService
 {

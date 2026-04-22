@@ -33,6 +33,11 @@ final class Price
         return $this->euro * 100 + $this->cent;
     }
 
+    public function toFloat(): float
+    {
+        return (float) $this->euro + (float) $this->cent / 100.0;
+    }
+
     /**
      * @psalm-suppress PossiblyUnusedMethod
      */

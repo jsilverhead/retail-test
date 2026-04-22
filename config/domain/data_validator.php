@@ -1,7 +1,7 @@
 <?php
 
+use App\Domain\Ware\Service\DataValidatorInterface;
 use App\Infrastructure\Validator\DataValidator;
-use App\Infrastructure\Validator\DataValidatorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;

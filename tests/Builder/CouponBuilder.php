@@ -6,7 +6,7 @@ use App\Domain\Coupon\Coupon;
 use App\Domain\Coupon\Enum\CodeTypeEnum;
 use App\Domain\Coupon\Service\CreateCouponService;
 use App\Domain\Coupon\Service\Dto\CreateCouponDto;
-use App\Infrastructure\Validator\DataValidatorInterface;
+use App\Domain\Ware\Service\DataValidatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class CouponBuilder

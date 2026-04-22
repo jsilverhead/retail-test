@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Validator;
+namespace App\Domain\Ware\Service;
 
 interface DataValidatorInterface
 {

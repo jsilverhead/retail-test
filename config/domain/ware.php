@@ -1,12 +1,13 @@
 <?php
 
 use App\Domain\Ware\Repository\WareRepositoryInterface;
+use App\Domain\Ware\Service\CountryExtractorInterface;
 use App\Domain\Ware\Service\CreateWareService;
+use App\Domain\Ware\Service\PurchaseService;
 use App\Infrastructure\Calculator\PriceCalculator;
 use App\Infrastructure\Calculator\PriceCalculatorInterface;
 use App\Infrastructure\Repository\Ware\WareRepository;
 use App\Infrastructure\Validator\CountryExtractor;
-use App\Infrastructure\Validator\CountryExtractorInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\DoctrineConfig;
 
@@ -33,6 +34,7 @@ return static function (ContainerConfigurator $container, DoctrineConfig $doctri
     );
 
     $services->set(CreateWareService::class)->public();
+    $services->set(PurchaseService::class)->public();
     $services->set(WareRepositoryInterface::class, WareRepository::class);
     $services->set(PriceCalculatorInterface::class, PriceCalculator::class);
     $services->set(CountryExtractorInterface::class, CountryExtractor::class);

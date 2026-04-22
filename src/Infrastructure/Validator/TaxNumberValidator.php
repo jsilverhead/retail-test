@@ -2,46 +2,36 @@
 
 namespace App\Infrastructure\Validator;
 
-use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
+use App\Infrastructure\Validator\Constraint\TaxNumber;
 use InvalidArgumentException;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-final class TaxNumberValidator
+final class TaxNumberValidator extends ConstraintValidator
 {
-    public function validateAndReturnCountry(string $taxNumber): CountriesWithTaxEnum
+    public function __construct(private readonly CountryExtractor $extractor)
     {
-        $country = $this->getCountry($taxNumber);
-
-        $this->validateTaxNumber(taxNumber: $taxNumber, country: $country);
-
-        return $country;
     }
 
-    private function getCountry(string $taxNumber): CountriesWithTaxEnum
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        $validCodes = CountriesWithTaxEnum::getValidCodes();
-        $country = null;
+        if (!$constraint instanceof TaxNumber) {
+            throw new UnexpectedTypeException($constraint, TaxNumber::class);
+        }
 
-        foreach ($validCodes as $code) {
-            if (str_contains($taxNumber, $code)) {
-                $country = CountriesWithTaxEnum::from($code);
+        if (!\is_string($value) || '' === $value) {
+            return;
+        }
 
-                break;
+        try {
+            $country = $this->extractor->extractCountry($value);
+
+            if (!preg_match($country->getTaxRegexp(), $value)) {
+                $this->context->buildViolation($constraint->message)->addViolation();
             }
-        }
-
-        if (null === $country) {
-            throw new InvalidArgumentException('Country code not supported');
-        }
-
-        return $country;
-    }
-
-    private function validateTaxNumber(string $taxNumber, CountriesWithTaxEnum $country): void
-    {
-        $regexp = $country->getTaxRegexp();
-
-        if (!preg_match($regexp, $taxNumber)) {
-            throw new InvalidArgumentException('Invalid Tax number');
+        } catch (InvalidArgumentException $e) {
+            $this->context->buildViolation('Country code not supported')->addViolation();
         }
     }
 }

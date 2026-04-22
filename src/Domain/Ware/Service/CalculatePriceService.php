@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Domain\Coupon\Service;
+namespace App\Domain\Ware\Service;
 
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
 use App\Domain\Ware\Repository\WareRepositoryInterface;
 use App\Domain\Ware\ValueObject\Price;
 use App\Infrastructure\Calculator\PriceCalculatorInterface;
-use App\Infrastructure\Http\User\Dto\CalculatePriceDto;
-use App\Infrastructure\Validator\CountryExtractorInterface;
 
 final readonly class CalculatePriceService
 {
@@ -19,14 +17,14 @@ final readonly class CalculatePriceService
     ) {
     }
 
-    public function calculate(CalculatePriceDto $dto): Price
+    public function calculate(int $productId, string $taxCode, ?string $couponCode): Price
     {
-        $country = $this->countryExtractor->extractCountry($dto->taxCode);
-        $ware = $this->wareRepository->getByIdOrFail($dto->productId);
+        $country = $this->countryExtractor->extractCountry($taxCode);
+        $ware = $this->wareRepository->getByIdOrFail($productId);
         $coupon = null;
 
-        if (null !== $dto->couponCode) {
-            $coupon = $this->couponRepository->getCouponByCodeOrFail($dto->couponCode);
+        if (null !== $couponCode) {
+            $coupon = $this->couponRepository->getCouponByCodeOrFail($couponCode);
         }
 
         return $this->priceCalculator->calculate(ware: $ware, coupon: $coupon, country: $country);

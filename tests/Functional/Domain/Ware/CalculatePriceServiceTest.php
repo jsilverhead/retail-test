@@ -3,9 +3,8 @@
 namespace App\Tests\Functional\Domain\Ware;
 
 use App\Domain\Coupon\Enum\CodeTypeEnum;
-use App\Domain\Coupon\Service\CalculatePriceService;
+use App\Domain\Ware\Service\CalculatePriceService;
 use App\Domain\Ware\ValueObject\Price;
-use App\Infrastructure\Http\User\Dto\CalculatePriceDto;
 use App\Tests\Builder\CouponBuilder;
 use App\Tests\Builder\WareBuilder;
 use Doctrine\ORM\EntityNotFoundException;
@@ -29,10 +28,8 @@ final class CalculatePriceServiceTest extends WebTestCase
 
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
-        $dto = new CalculatePriceDto(productId: $ware->getId(), taxCode: 'RU123456789', couponCode: $coupon->getCode());
-
         $this->expectException(BadRequestHttpException::class);
-        $service->calculate($dto);
+        $service->calculate(productId: $ware->getId(), taxCode: 'RU123456789', couponCode: $coupon->getCode());
     }
 
     public function testNotUndefinedCouponFail(): void
@@ -42,10 +39,8 @@ final class CalculatePriceServiceTest extends WebTestCase
 
         $ware = $wareBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
 
-        $dto = new CalculatePriceDto(productId: $ware->getId(), taxCode: 'DE123456789', couponCode: 'SALE21');
-
         $this->expectException(EntityNotFoundException::class);
-        $service->calculate($dto);
+        $service->calculate(productId: $ware->getId(), taxCode: 'DE123456789', couponCode: 'SALE21');
     }
 
     public function testSuccess(): void
@@ -57,9 +52,7 @@ final class CalculatePriceServiceTest extends WebTestCase
         $ware = $wareBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
-        $dto = new CalculatePriceDto(productId: $ware->getId(), taxCode: 'GR123456789', couponCode: $coupon->getCode());
-
-        $price = $service->calculate($dto);
+        $price = $service->calculate(productId: $ware->getId(), taxCode: 'GR123456789', couponCode: $coupon->getCode());
 
         self::assertSame(expected: 116, actual: $price->euro);
         self::assertSame(expected: 56, actual: $price->cent);
@@ -72,9 +65,7 @@ final class CalculatePriceServiceTest extends WebTestCase
 
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
-        $dto = new CalculatePriceDto(productId: 5, taxCode: 'GR123456789', couponCode: $coupon->getCode());
-
         $this->expectException(EntityNotFoundException::class);
-        $service->calculate($dto);
+        $service->calculate(productId: 5, taxCode: 'GR123456789', couponCode: $coupon->getCode());
     }
 }

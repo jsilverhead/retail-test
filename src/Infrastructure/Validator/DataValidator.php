@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Validator;
 
+use App\Domain\Ware\Service\DataValidatorInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

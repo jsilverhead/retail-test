@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Validator;
+namespace App\Domain\Ware\Service;
 
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
 

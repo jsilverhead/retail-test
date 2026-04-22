@@ -6,7 +6,6 @@ use App\Domain\Ware\Exception\WareWithThisNameAlreadyExistsException;
 use App\Domain\Ware\Repository\WareRepositoryInterface;
 use App\Domain\Ware\Service\Dto\CreateWareDto;
 use App\Domain\Ware\Ware;
-use App\Infrastructure\Validator\DataValidatorInterface;
 
 final readonly class CreateWareService
 {

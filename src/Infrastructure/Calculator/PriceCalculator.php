@@ -9,7 +9,7 @@ use App\Domain\Ware\Ware;
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
 use LogicException;
 
-final class PriceCalculator
+final class PriceCalculator implements PriceCalculatorInterface
 {
     public function calculate(Ware $ware, ?Coupon $coupon, CountriesWithTaxEnum $country): Price
     {

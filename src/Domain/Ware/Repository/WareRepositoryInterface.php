@@ -8,5 +8,7 @@ interface WareRepositoryInterface
 {
     public function add(Ware $warehouse): void;
 
+    public function getByIdOrFail(int $id): Ware;
+
     public function getByName(string $name): ?Ware;
 }

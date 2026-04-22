@@ -6,6 +6,7 @@ use App\Domain\Coupon\Coupon;
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,6 +35,17 @@ final class CouponRepository extends ServiceEntityRepository implements CouponRe
             ->setParameter('code', $code, Types::STRING)
             ->getQuery()
             ->getOneOrNullResult();
+
+        return $coupon;
+    }
+
+    public function getCouponByCodeOrFail(string $code): Coupon
+    {
+        $coupon = $this->getCouponByCode($code);
+
+        if (null === $coupon) {
+            throw new EntityNotFoundException(Coupon::class);
+        }
 
         return $coupon;
     }

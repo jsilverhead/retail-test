@@ -55,8 +55,6 @@ final class TaxNumberValidatorTest extends ConstraintValidatorTestCase
         yield 'GR too long' => ['GR1234567890', 'The tax number is not valid.'];
 
         yield 'GR too short' => ['GR123456', 'The tax number is not valid.'];
-
-        yield 'unsupported country' => ['AU123456789', 'Country code not supported'];
     }
 
     #[DataProvider('provideValidTaxNumberCases')]

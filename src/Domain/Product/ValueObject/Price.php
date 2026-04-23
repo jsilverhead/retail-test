@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ware\ValueObject;
+namespace App\Domain\Product\ValueObject;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\EventListener;
 
+use App\Infrastructure\Exception\EntityNotFoundException;
 use App\Infrastructure\Exception\ServiceException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,17 @@ final readonly class DomainExceptionListener
             return;
         }
 
+        $statusCode = match (true) {
+            $exception instanceof EntityNotFoundException => Response::HTTP_NOT_FOUND,
+            default => Response::HTTP_BAD_REQUEST,
+        };
+
         $response = new JsonResponse(
             [
                 'type' => $exception->getType(),
                 'description' => $exception->getDescription(),
             ],
-            Response::HTTP_BAD_REQUEST,
+            $statusCode,
         );
 
         $event->setResponse($response);

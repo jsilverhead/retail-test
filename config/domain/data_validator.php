@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Ware\Service\DataValidatorInterface;
+use App\Domain\Product\Service\DataValidatorInterface;
 use App\Infrastructure\Validator\DataValidator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 

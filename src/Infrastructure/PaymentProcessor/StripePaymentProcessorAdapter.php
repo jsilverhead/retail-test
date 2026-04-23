@@ -2,9 +2,9 @@
 
 namespace App\Infrastructure\PaymentProcessor;
 
-use App\Domain\Ware\Exception\ProcessPaymentFailedException;
-use App\Domain\Ware\Service\PaymentProcessorInterface;
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\Exception\ProcessPaymentFailedException;
+use App\Domain\Product\Service\PaymentProcessorInterface;
+use App\Domain\Product\ValueObject\Price;
 use Systemeio\TestForCandidates\PaymentProcessor\StripePaymentProcessor;
 
 final readonly class StripePaymentProcessorAdapter implements PaymentProcessorInterface

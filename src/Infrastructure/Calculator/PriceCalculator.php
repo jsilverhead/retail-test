@@ -4,16 +4,16 @@ namespace App\Infrastructure\Calculator;
 
 use App\Domain\Coupon\Coupon;
 use App\Domain\Coupon\Enum\CodeTypeEnum;
-use App\Domain\Ware\ValueObject\Price;
-use App\Domain\Ware\Ware;
+use App\Domain\Product\Product;
+use App\Domain\Product\ValueObject\Price;
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
 use LogicException;
 
 final class PriceCalculator implements PriceCalculatorInterface
 {
-    public function calculate(Ware $ware, ?Coupon $coupon, CountriesWithTaxEnum $country): Price
+    public function calculate(Product $product, ?Coupon $coupon, CountriesWithTaxEnum $country): Price
     {
-        $totalCents = $ware->getPrice()->toCents();
+        $totalCents = $product->getPrice()->toCents();
 
         if (null !== $coupon) {
             $totalCents = $this->applyCoupon(cents: $totalCents, coupon: $coupon);

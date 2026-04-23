@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit;
 
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\ValueObject\Price;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

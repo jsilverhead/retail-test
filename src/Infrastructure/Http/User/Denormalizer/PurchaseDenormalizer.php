@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Http\User\Denormalizer;
 
-use App\Domain\Ware\Enum\PaymentProcessorsEnum;
+use App\Domain\Product\Enum\PaymentProcessorsEnum;
 use App\Infrastructure\Http\Payload\Payload;
 use App\Infrastructure\Http\User\Dto\PurchaseDto;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

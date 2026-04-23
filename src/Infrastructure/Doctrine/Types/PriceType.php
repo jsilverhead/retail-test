@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Doctrine\Types;
 
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\ValueObject\Price;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use InvalidArgumentException;

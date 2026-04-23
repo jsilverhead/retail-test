@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain\Ware\Service;
+namespace App\Domain\Product\Service;
 
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
-use App\Domain\Ware\Repository\WareRepositoryInterface;
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\Repository\ProductRepositoryInterface;
+use App\Domain\Product\ValueObject\Price;
 use App\Infrastructure\Calculator\PriceCalculatorInterface;
 
 final readonly class CalculatePriceService
@@ -12,7 +12,7 @@ final readonly class CalculatePriceService
     public function __construct(
         private CountryExtractorInterface $countryExtractor,
         private PriceCalculatorInterface $priceCalculator,
-        private WareRepositoryInterface $wareRepository,
+        private ProductRepositoryInterface $productRepository,
         private CouponRepositoryInterface $couponRepository,
     ) {
     }
@@ -20,13 +20,13 @@ final readonly class CalculatePriceService
     public function calculate(int $productId, string $taxCode, ?string $couponCode): Price
     {
         $country = $this->countryExtractor->extractCountry($taxCode);
-        $ware = $this->wareRepository->getByIdOrFail($productId);
+        $product = $this->productRepository->getByIdOrFail($productId);
         $coupon = null;
 
         if (null !== $couponCode) {
             $coupon = $this->couponRepository->getCouponByCodeOrFail($couponCode);
         }
 
-        return $this->priceCalculator->calculate(ware: $ware, coupon: $coupon, country: $country);
+        return $this->priceCalculator->calculate(product: $product, coupon: $coupon, country: $country);
     }
 }

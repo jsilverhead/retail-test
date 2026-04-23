@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Http\User\Action;
 
-use App\Domain\Ware\Service\CalculatePriceService;
+use App\Domain\Product\Service\CalculatePriceService;
 use App\Infrastructure\Http\Payload\Payload;
 use App\Infrastructure\Http\User\Denormalizer\CalculatePriceDenormalizer;
 use App\Infrastructure\Http\User\Dto\CalculatePriceDto;

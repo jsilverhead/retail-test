@@ -3,11 +3,11 @@
 namespace App\Infrastructure\Calculator;
 
 use App\Domain\Coupon\Coupon;
-use App\Domain\Ware\ValueObject\Price;
-use App\Domain\Ware\Ware;
+use App\Domain\Product\Product;
+use App\Domain\Product\ValueObject\Price;
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
 
 interface PriceCalculatorInterface
 {
-    public function calculate(Ware $ware, ?Coupon $coupon, CountriesWithTaxEnum $country): Price;
+    public function calculate(Product $product, ?Coupon $coupon, CountriesWithTaxEnum $country): Price;
 }

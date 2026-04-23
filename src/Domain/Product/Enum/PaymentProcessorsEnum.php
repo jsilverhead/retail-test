@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ware\Enum;
+namespace App\Domain\Product\Enum;
 
 enum PaymentProcessorsEnum: string
 {

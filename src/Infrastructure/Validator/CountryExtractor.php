@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Validator;
 
-use App\Domain\Ware\Service\CountryExtractorInterface;
+use App\Domain\Product\Service\CountryExtractorInterface;
 use App\Infrastructure\Calculator\Enum\CountriesWithTaxEnum;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 

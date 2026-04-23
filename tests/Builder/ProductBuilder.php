@@ -2,13 +2,13 @@
 
 namespace App\Tests\Builder;
 
-use App\Domain\Ware\Service\CreateWareService;
-use App\Domain\Ware\Service\Dto\CreateWareDto;
-use App\Domain\Ware\ValueObject\Price;
-use App\Domain\Ware\Ware;
+use App\Domain\Product\Product;
+use App\Domain\Product\Service\CreateProductService;
+use App\Domain\Product\Service\Dto\CreateProductDto;
+use App\Domain\Product\ValueObject\Price;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class WareBuilder
+final class ProductBuilder
 {
     /** @psalm-var non-empty-string|null $name */
     private ?string $name = null;
@@ -16,22 +16,22 @@ final class WareBuilder
     private ?Price $price = null;
 
     public function __construct(
-        private readonly CreateWareService $createWareService,
+        private readonly CreateProductService $createWareService,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
-    public function build(): Ware
+    public function build(): Product
     {
         $name = $this->name ?? uniqid('ware_', true);
         $price = $this->price ?? new Price(euro: 100, cent: 0);
-        $dto = new CreateWareDto(name: $name, price: $price);
+        $dto = new CreateProductDto(name: $name, price: $price);
 
-        $ware = $this->createWareService->create($dto);
+        $product = $this->createWareService->create($dto);
 
         $this->entityManager->flush();
 
-        return $ware;
+        return $product;
     }
 
     /**

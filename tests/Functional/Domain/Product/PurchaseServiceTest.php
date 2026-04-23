@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Tests\Functional\Domain\Ware;
+namespace App\Tests\Functional\Domain\Product;
 
 use App\Domain\Coupon\Enum\CodeTypeEnum;
-use App\Domain\Ware\Enum\PaymentProcessorsEnum;
-use App\Domain\Ware\Exception\ProcessPaymentFailedException;
-use App\Domain\Ware\Service\PurchaseService;
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\Enum\PaymentProcessorsEnum;
+use App\Domain\Product\Exception\ProcessPaymentFailedException;
+use App\Domain\Product\Service\PurchaseService;
+use App\Domain\Product\ValueObject\Price;
 use App\Tests\Builder\CouponBuilder;
-use App\Tests\Builder\WareBuilder;
+use App\Tests\Builder\ProductBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -21,15 +21,15 @@ final class PurchaseServiceTest extends WebTestCase
     public function testPaypalTooHighPriceSuccess(): void
     {
         $service = $this->getContainer()->get(PurchaseService::class);
-        $wareBuilder = $this->getContainer()->get(WareBuilder::class);
+        $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $ware = $wareBuilder->withName('Iphone')->withPrice(new Price(euro: 10000, cent: 0))->build();
+        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 10000, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $this->expectException(ProcessPaymentFailedException::class);
         $service->purchase(
-            productId: $ware->getId(),
+            productId: $product->getId(),
             taxCode: 'GR123456789',
             couponCode: $coupon->getCode(),
             processor: PaymentProcessorsEnum::PAYPAL,
@@ -39,15 +39,15 @@ final class PurchaseServiceTest extends WebTestCase
     public function testStripeTooLowPriceSuccess(): void
     {
         $service = $this->getContainer()->get(PurchaseService::class);
-        $wareBuilder = $this->getContainer()->get(WareBuilder::class);
+        $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $ware = $wareBuilder->withName('Iphone')->withPrice(new Price(euro: 10, cent: 0))->build();
+        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 10, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $this->expectException(ProcessPaymentFailedException::class);
         $service->purchase(
-            productId: $ware->getId(),
+            productId: $product->getId(),
             taxCode: 'GR123456789',
             couponCode: $coupon->getCode(),
             processor: PaymentProcessorsEnum::STRIPE,
@@ -57,14 +57,14 @@ final class PurchaseServiceTest extends WebTestCase
     public function testWithPaypalSuccess(): void
     {
         $service = $this->getContainer()->get(PurchaseService::class);
-        $wareBuilder = $this->getContainer()->get(WareBuilder::class);
+        $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $ware = $wareBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
+        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $service->purchase(
-            productId: $ware->getId(),
+            productId: $product->getId(),
             taxCode: 'GR123456789',
             couponCode: $coupon->getCode(),
             processor: PaymentProcessorsEnum::PAYPAL,
@@ -75,14 +75,14 @@ final class PurchaseServiceTest extends WebTestCase
     public function testWithStripeSuccess(): void
     {
         $service = $this->getContainer()->get(PurchaseService::class);
-        $wareBuilder = $this->getContainer()->get(WareBuilder::class);
+        $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $ware = $wareBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
+        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $service->purchase(
-            productId: $ware->getId(),
+            productId: $product->getId(),
             taxCode: 'GR123456789',
             couponCode: $coupon->getCode(),
             processor: PaymentProcessorsEnum::STRIPE,

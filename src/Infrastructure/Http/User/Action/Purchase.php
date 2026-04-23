@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Http\User\Action;
 
-use App\Domain\Ware\Service\PurchaseService;
+use App\Domain\Product\Service\PurchaseService;
 use App\Infrastructure\Http\Payload\Payload;
 use App\Infrastructure\Http\User\Denormalizer\PurchaseDenormalizer;
 use App\Infrastructure\Http\User\Dto\PurchaseDto;

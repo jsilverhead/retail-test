@@ -1,15 +1,49 @@
-### Calculate Price
+### Calculate Price | Iphone | GR country | Percentage coupon
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
 
 {
   "product": 1,
-  "taxNumber": "DE123456789",
+  "taxNumber": "GR123456789",
+  "couponCode": "NEW6"
+}
+
+### Calculate Price | Iphone | GR country | Fixed value coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR123456789",
   "couponCode": "D15"
 }
 
-### Execute Purchase
+### Calculate Price | Iphone | GR country | No coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR123456789",
+  "couponCode": null
+}
+
+### Execute Purchase | Iphone | IT country | Percentage coupon | Paypal
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": "NEW6",
+  "paymentProcessor": "paypal"
+}
+
+### Execute Purchase | Iphone | IT country | Fixed value coupon | Paypal
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -19,4 +53,52 @@ Content-Type: application/json
   "taxNumber": "IT12345678900",
   "couponCode": "D15",
   "paymentProcessor": "paypal"
+}
+
+### Execute Purchase | Iphone | IT country | No coupon | Paypal
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": null,
+  "paymentProcessor": "paypal"
+}
+
+### Execute Purchase | Iphone | IT country | Percentage coupon | Stripe
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": "NEW6",
+  "paymentProcessor": "stripe"
+}
+
+### Execute Purchase | Iphone | IT country | Fixed value coupon | Stripe
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": "D15",
+  "paymentProcessor": "stripe"
+}
+
+### Execute Purchase | Iphone | IT country | No coupon | Stripe
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "IT12345678900",
+  "couponCode": null,
+  "paymentProcessor": "stripe"
 }

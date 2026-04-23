@@ -1,5 +1,6 @@
 <?php
 
+use App\Infrastructure\Console\InitTestDataCommand;
 use App\Infrastructure\EventListener\DomainExceptionListener;
 use App\Infrastructure\Validator\CountryExtractor;
 use App\Infrastructure\Validator\TaxNumberValidator;
@@ -33,4 +34,6 @@ return static function (ContainerConfigurator $container): void {
         'event' => 'kernel.exception',
         'priority' => 100,
     ]);
+
+    $services->set(InitTestDataCommand::class)->tag('console.command');
 };

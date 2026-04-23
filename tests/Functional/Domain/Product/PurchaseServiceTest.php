@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Domain\Ware;
+namespace App\Tests\Functional\Domain\Product;
 
 use App\Domain\Coupon\Enum\CodeTypeEnum;
 use App\Domain\Product\Enum\PaymentProcessorsEnum;

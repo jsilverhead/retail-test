@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Domain\Ware;
+namespace App\Tests\Functional\Domain\Product;
 
 use App\Domain\Product\Exception\ProductWithThisNameAlreadyExistsException;
 use App\Domain\Product\Service\CreateProductService;

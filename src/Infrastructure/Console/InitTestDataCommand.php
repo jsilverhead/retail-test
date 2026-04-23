@@ -46,6 +46,12 @@ final class InitTestDataCommand extends Command
                 'price' => json_encode(['euro' => 10, 'cent' => 0], \JSON_THROW_ON_ERROR),
             ]);
 
+            $this->connection->executeStatement('INSERT INTO product (id, name, price) VALUES (:id, :name, :price)', [
+                'id' => 4,
+                'name' => 'Overprice Iphone',
+                'price' => json_encode(['euro' => 6000000, 'cent' => 0], \JSON_THROW_ON_ERROR),
+            ]);
+
             $this->connection->executeStatement(
                 'INSERT INTO coupon (id, code, fixed_value, percentage, type) VALUES (:id, :code, :fixed_value, :percentage, :type)',
                 [

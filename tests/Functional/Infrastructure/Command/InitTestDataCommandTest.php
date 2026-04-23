@@ -31,7 +31,7 @@ final class InitTestDataCommandTest extends WebTestCase
         $productCount = (int) $this->connection->fetchOne('SELECT COUNT(DISTINCT id) FROM product');
         $couponCount = (int) $this->connection->fetchOne('SELECT COUNT(DISTINCT id) FROM coupon');
 
-        self::assertSame(expected: 3, actual: $productCount);
+        self::assertSame(expected: 4, actual: $productCount);
         self::assertSame(expected: 2, actual: $couponCount);
     }
 

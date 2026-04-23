@@ -24,7 +24,7 @@ final class CalculatePriceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
+        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('Test Iphone')->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $request = [

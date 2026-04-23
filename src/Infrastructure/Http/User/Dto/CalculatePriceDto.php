@@ -11,5 +11,6 @@ final readonly class CalculatePriceDto
         #[Assert\NotNull] #[Assert\Positive] public int $productId,
         #[Assert\NotBlank] #[Assert\NotNull] #[TaxNumber] public string $taxCode,
         #[Assert\NotBlank(allowNull: true)] public ?string $couponCode,
-    ) {}
+    ) {
+    }
 }

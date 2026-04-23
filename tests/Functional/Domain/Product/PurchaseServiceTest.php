@@ -24,7 +24,7 @@ final class PurchaseServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 10000, cent: 0))->build();
+        $product = $productBuilder->withName('Test Iphone')->withPrice(new Price(euro: 10000, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $this->expectException(ProcessPaymentFailedException::class);
@@ -42,7 +42,7 @@ final class PurchaseServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 10, cent: 0))->build();
+        $product = $productBuilder->withName('Test Iphone')->withPrice(new Price(euro: 10, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $this->expectException(ProcessPaymentFailedException::class);
@@ -60,7 +60,7 @@ final class PurchaseServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
+        $product = $productBuilder->withName('Test Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $service->purchase(
@@ -78,7 +78,7 @@ final class PurchaseServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withName('Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
+        $product = $productBuilder->withName('Test Iphone')->withPrice(new Price(euro: 100, cent: 0))->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $service->purchase(

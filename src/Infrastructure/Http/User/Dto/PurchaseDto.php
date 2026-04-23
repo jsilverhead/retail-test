@@ -13,5 +13,6 @@ final readonly class PurchaseDto
         #[Assert\NotBlank] #[Assert\NotNull] #[TaxNumber] public string $taxCode,
         #[Assert\NotBlank(allowNull: true)] public ?string $couponCode,
         #[Assert\NotBlank] public PaymentProcessorsEnum $paymentProcessor,
-    ) {}
+    ) {
+    }
 }

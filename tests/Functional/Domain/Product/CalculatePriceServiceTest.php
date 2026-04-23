@@ -24,7 +24,7 @@ final class CalculatePriceServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
+        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('Test Iphone')->build();
 
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
@@ -37,7 +37,7 @@ final class CalculatePriceServiceTest extends WebTestCase
         $service = $this->getContainer()->get(CalculatePriceService::class);
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
 
-        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
+        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('Test Iphone')->build();
 
         $this->expectException(EntityNotFoundException::class);
         $service->calculate(productId: $product->getId(), taxCode: 'DE123456789', couponCode: 'SALE21');
@@ -49,7 +49,7 @@ final class CalculatePriceServiceTest extends WebTestCase
         $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
+        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('Test Iphone')->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $price = $service->calculate(

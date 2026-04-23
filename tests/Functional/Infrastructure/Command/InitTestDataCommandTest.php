@@ -2,19 +2,21 @@
 
 namespace App\Tests\Functional\Infrastructure\Command;
 
+use App\Infrastructure\Console\InitTestDataCommand;
 use Doctrine\DBAL\Connection;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @internal
- *
- * @coversNothing
  */
+#[CoversClass(InitTestDataCommand::class)]
 final class InitTestDataCommandTest extends WebTestCase
 {
     private Connection $connection;
+
     public function testSuccess(): void
     {
         $kernel = self::bootKernel();

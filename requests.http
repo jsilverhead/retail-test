@@ -1,4 +1,4 @@
-### Calculate Price | Iphone | GR country | Percentage coupon
+### Calculate Price | Iphone | GR country | Percentage coupon | Success
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -9,7 +9,7 @@ Content-Type: application/json
   "couponCode": "NEW6"
 }
 
-### Calculate Price | Iphone | GR country | Fixed value coupon
+### Calculate Price | Iphone | GR country | Fixed value coupon | Success
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -20,7 +20,7 @@ Content-Type: application/json
   "couponCode": "D15"
 }
 
-### Calculate Price | Iphone | GR country | No coupon
+### Calculate Price | Iphone | GR country | No coupon | Success
 POST http://127.0.0.1:8337/calculate-price
 Accept: application/json
 Content-Type: application/json
@@ -31,7 +31,75 @@ Content-Type: application/json
   "couponCode": null
 }
 
-### Execute Purchase | Iphone | IT country | Percentage coupon | Paypal
+### Calculate Price | Iphone | FAIL country | No coupon | Fail
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "FAIL",
+  "couponCode": null
+}
+
+> {%
+    client.test("Response status is 400", function() {
+        client.assert(response.status === 400, "Expected 400, got " + response.status);
+    });
+%}
+
+### Calculate Price | Iphone | GR country | No coupon | Fail
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR12345",
+  "couponCode": null
+}
+
+> {%
+    client.test("Response status is 400", function() {
+        client.assert(response.status === 400, "Expected 400, got " + response.status);
+    });
+%}
+
+### Calculate Price | Unknown product | GR country | No coupon | Fail
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 99,
+  "taxNumber": "GR123456789",
+  "couponCode": null
+}
+
+> {%
+    client.test("Response status is 404", function() {
+        client.assert(response.status === 404, "Expected 404, got " + response.status);
+    });
+%}
+
+### Calculate Price | Iphone product | GR country | Unknown coupon | Fail
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 1,
+  "taxNumber": "GR123456789",
+  "couponCode": "FAIL10"
+}
+
+> {%
+    client.test("Response status is 404", function() {
+        client.assert(response.status === 404, "Expected 404, got " + response.status);
+    });
+%}
+
+### Execute Purchase | Iphone | IT country | Percentage coupon | Paypal | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -43,7 +111,7 @@ Content-Type: application/json
   "paymentProcessor": "paypal"
 }
 
-### Execute Purchase | Iphone | IT country | Fixed value coupon | Paypal
+### Execute Purchase | Iphone | IT country | Fixed value coupon | Paypal | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -55,7 +123,7 @@ Content-Type: application/json
   "paymentProcessor": "paypal"
 }
 
-### Execute Purchase | Iphone | IT country | No coupon | Paypal
+### Execute Purchase | Iphone | IT country | No coupon | Paypal | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -67,7 +135,25 @@ Content-Type: application/json
   "paymentProcessor": "paypal"
 }
 
-### Execute Purchase | Iphone | IT country | Percentage coupon | Stripe
+### Execute Purchase | Overprice Iphone | IT country | No coupon | Paypal | Fail
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 4,
+  "taxNumber": "IT12345678900",
+  "couponCode": null,
+  "paymentProcessor": "paypal"
+}
+
+> {%
+    client.test("Response status is 400", function() {
+        client.assert(response.status === 400, "Expected 400, got " + response.status);
+    });
+%}
+
+### Execute Purchase | Iphone | IT country | Percentage coupon | Stripe | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -79,7 +165,7 @@ Content-Type: application/json
   "paymentProcessor": "stripe"
 }
 
-### Execute Purchase | Iphone | IT country | Fixed value coupon | Stripe
+### Execute Purchase | Iphone | IT country | Fixed value coupon | Stripe | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -91,7 +177,7 @@ Content-Type: application/json
   "paymentProcessor": "stripe"
 }
 
-### Execute Purchase | Iphone | IT country | No coupon | Stripe
+### Execute Purchase | Iphone | IT country | No coupon | Stripe | Success
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
 Content-Type: application/json
@@ -102,3 +188,21 @@ Content-Type: application/json
   "couponCode": null,
   "paymentProcessor": "stripe"
 }
+
+### Execute Purchase | Чехол | IT country | No coupon | Stripe | Fail
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 3,
+  "taxNumber": "IT12345678900",
+  "couponCode": null,
+  "paymentProcessor": "stripe"
+}
+
+> {%
+    client.test("Response status is 400", function() {
+        client.assert(response.status === 400, "Expected 400, got " + response.status);
+    });
+%}

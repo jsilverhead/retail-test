@@ -7,6 +7,8 @@ use App\Infrastructure\Exception\ServiceException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final readonly class DomainExceptionListener
 {
@@ -14,23 +16,52 @@ final readonly class DomainExceptionListener
     {
         $exception = $event->getThrowable();
 
-        if (!$exception instanceof ServiceException) {
-            return;
+        if ($exception instanceof ServiceException) {
+            $statusCode = match (true) {
+                $exception instanceof EntityNotFoundException => Response::HTTP_NOT_FOUND,
+                default => Response::HTTP_BAD_REQUEST,
+            };
+
+            $response = new JsonResponse(
+                [
+                    'type' => $exception->getType(),
+                    'description' => $exception->getDescription(),
+                ],
+                $statusCode,
+            );
+
+            $event->setResponse($response);
         }
 
-        $statusCode = match (true) {
-            $exception instanceof EntityNotFoundException => Response::HTTP_NOT_FOUND,
-            default => Response::HTTP_BAD_REQUEST,
-        };
+        if ($exception instanceof ValidationFailedException) {
+            $errors = [];
 
-        $response = new JsonResponse(
-            [
-                'type' => $exception->getType(),
-                'description' => $exception->getDescription(),
-            ],
-            $statusCode,
-        );
+            foreach ($exception->getViolations() as $violation) {
+                $errors[] = $violation->getMessage();
+            }
 
-        $event->setResponse($response);
+            $event->setResponse(
+                new JsonResponse(
+                    [
+                        'type' => 'validation_failed',
+                        'description' => 'Validation failed',
+                        'errors' => $errors,
+                    ],
+                    Response::HTTP_BAD_REQUEST,
+                ),
+            );
+        }
+
+        if ($exception instanceof BadRequestHttpException) {
+            $event->setResponse(
+                new JsonResponse(
+                    [
+                        'type' => 'bad_request',
+                        'description' => $exception->getMessage(),
+                    ],
+                    Response::HTTP_BAD_REQUEST,
+                ),
+            );
+        }
     }
 }

@@ -68,6 +68,9 @@ final class InitTestDataCommand extends Command
                 ],
             );
 
+            $this->connection->executeStatement("SELECT setval('product_id_seq', (SELECT MAX(id) FROM product))");
+            $this->connection->executeStatement("SELECT setval('coupon_id_seq', (SELECT MAX(id) FROM coupon))");
+
             $this->connection->commit();
         } catch (Throwable $exception) {
             $this->connection->rollBack();

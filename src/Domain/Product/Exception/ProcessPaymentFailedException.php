@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ware\Exception;
+namespace App\Domain\Product\Exception;
 
 use App\Infrastructure\Exception\ServiceException;
 

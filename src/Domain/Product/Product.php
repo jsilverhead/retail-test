@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domain\Ware;
+namespace App\Domain\Product;
 
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\ValueObject\Price;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-final class Ware
+final class Product
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
     #[ORM\Id]

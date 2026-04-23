@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domain\Ware\Service\Dto;
+namespace App\Domain\Product\Service\Dto;
 
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\ValueObject\Price;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final readonly class CreateWareDto
+final readonly class CreateProductDto
 {
     public function __construct(
         #[Assert\NotBlank] #[Assert\Length(min: 3, max: 100)] public string $name,

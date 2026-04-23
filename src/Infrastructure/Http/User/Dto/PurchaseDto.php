@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Http\User\Dto;
 
-use App\Domain\Ware\Enum\PaymentProcessorsEnum;
+use App\Domain\Product\Enum\PaymentProcessorsEnum;
 use App\Infrastructure\Validator\Constraint\TaxNumber;
 use Symfony\Component\Validator\Constraints as Assert;
 

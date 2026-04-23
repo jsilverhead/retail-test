@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Ware\Service;
+namespace App\Domain\Product\Service;
 
-use App\Domain\Ware\Enum\PaymentProcessorsEnum;
+use App\Domain\Product\Enum\PaymentProcessorsEnum;
 
 interface PaymentProcessorFactoryInterface
 {

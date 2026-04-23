@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\Ware\Service\PaymentProcessorFactoryInterface;
+use App\Domain\Product\Service\PaymentProcessorFactoryInterface;
 use App\Infrastructure\PaymentProcessor\PaymentProcessorFactory;
 use App\Infrastructure\PaymentProcessor\PaypalPaymentProcessorAdapter;
 use App\Infrastructure\PaymentProcessor\StripePaymentProcessorAdapter;

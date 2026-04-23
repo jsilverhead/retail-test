@@ -3,10 +3,10 @@
 namespace App\Tests\Functional\Infrastructure\Http\Action;
 
 use App\Domain\Coupon\Enum\CodeTypeEnum;
-use App\Domain\Ware\ValueObject\Price;
+use App\Domain\Product\ValueObject\Price;
 use App\Infrastructure\Http\User\Action\CalculatePrice;
 use App\Tests\Builder\CouponBuilder;
-use App\Tests\Builder\WareBuilder;
+use App\Tests\Builder\ProductBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +21,14 @@ final class CalculatePriceTest extends WebTestCase
     {
         $client = self::createClient();
 
-        $wareBuilder = $this->getContainer()->get(WareBuilder::class);
+        $productBuilder = $this->getContainer()->get(ProductBuilder::class);
         $couponBuilder = $this->getContainer()->get(CouponBuilder::class);
 
-        $ware = $wareBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
+        $product = $productBuilder->withPrice(new Price(euro: 100, cent: 0))->withName('iPhone')->build();
         $coupon = $couponBuilder->withType(CodeTypeEnum::PERCENTAGE)->withPercentage(6)->build();
 
         $request = [
-            'product' => $ware->getId(),
+            'product' => $product->getId(),
             'taxNumber' => 'GR123456789',
             'couponCode' => $coupon->getCode(),
         ];

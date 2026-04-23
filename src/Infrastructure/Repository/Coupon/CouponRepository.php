@@ -4,9 +4,10 @@ namespace App\Infrastructure\Repository\Coupon;
 
 use App\Domain\Coupon\Coupon;
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
+use App\Infrastructure\Exception\EntityNotFoundException;
+use App\Infrastructure\Exception\Enum\EntityNotFoundEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,7 +45,7 @@ final class CouponRepository extends ServiceEntityRepository implements CouponRe
         $coupon = $this->getCouponByCode($code);
 
         if (null === $coupon) {
-            throw new EntityNotFoundException(Coupon::class);
+            throw new EntityNotFoundException(EntityNotFoundEnum::COUPON);
         }
 
         return $coupon;

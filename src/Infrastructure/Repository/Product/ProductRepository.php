@@ -34,8 +34,8 @@ final class ProductRepository extends ServiceEntityRepository implements Product
     public function getById(int $id): ?Product
     {
         /** @psalm-var Product|null $product */
-        $product = $this->createQueryBuilder('w')
-            ->where('w.id = :id')
+        $product = $this->createQueryBuilder('p')
+            ->where('p.id = :id')
             ->setParameter('id', $id, Types::INTEGER)
             ->getQuery()
             ->getOneOrNullResult();
@@ -57,8 +57,8 @@ final class ProductRepository extends ServiceEntityRepository implements Product
     public function getByName(string $name): ?Product
     {
         /** @psalm-var Product|null $product */
-        $product = $this->createQueryBuilder('w')
-            ->where('w.name = :name')
+        $product = $this->createQueryBuilder('p')
+            ->where('p.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();

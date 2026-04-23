@@ -10,6 +10,9 @@ services:
     volumes:
       - .:/app:rw
     env_file: .env.test
+    depends_on:
+      postgres:
+          condition: service_healthy
 
   postgres:
     container_name: ${COMPOSE_PROJECT_NAME}-postgres
@@ -21,3 +24,28 @@ services:
     ports:
       - target: 5432
         published: 5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d retail" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  init-test-data:
+    build:
+      context: .
+      args:
+        USER_ID: ${USER_ID:-1000}
+    command: >
+      sh -c "
+        php bin/console doctrine:schema:update --force --no-interaction --env=test &&
+        php bin/console app:init-test:data --env=test
+      "
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: test
+    volumes:
+      - .:/app:rw
+    user: app

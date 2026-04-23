@@ -10,7 +10,7 @@ final readonly class CalculatePriceDto
     public function __construct(
         #[Assert\NotNull] #[Assert\Positive] public int $productId,
         #[Assert\NotBlank] #[Assert\NotNull] #[TaxNumber] public string $taxCode,
-        #[Assert\NotBlank] public ?string $couponCode,
+        #[Assert\NotBlank(allowNull: true)] public ?string $couponCode,
     ) {
     }
 }

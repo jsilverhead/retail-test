@@ -10,16 +10,14 @@ use Systemeio\TestForCandidates\PaymentProcessor\PaypalPaymentProcessor;
 
 final readonly class PaypalPaymentProcessorAdapter implements PaymentProcessorInterface
 {
-    public function __construct(private PaypalPaymentProcessor $paypalPaymentProcessor)
-    {
-    }
+    public function __construct(private PaypalPaymentProcessor $paypalPaymentProcessor) {}
 
     public function process(Price $price): void
     {
         try {
             $this->paypalPaymentProcessor->pay($price->toCents());
-        } catch (Exception) {
-            throw new ProcessPaymentFailedException();
+        } catch (Exception $exception) {
+            throw new ProcessPaymentFailedException($exception->getMessage());
         }
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Domain\Coupon\Repository\CouponRepositoryInterface;
-use App\Domain\Coupon\Service\CreateCouponService;
 use App\Infrastructure\Repository\Coupon\CouponRepository;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\DoctrineConfig;
@@ -29,6 +28,5 @@ return static function (ContainerConfigurator $container, DoctrineConfig $doctri
         param('kernel.project_dir')->__toString() . '/src/Infrastructure/Repository/Coupon',
     );
 
-    $services->set(CreateCouponService::class)->public();
     $services->alias(CouponRepositoryInterface::class, CouponRepository::class);
 };

@@ -6,17 +6,16 @@ use App\Infrastructure\Exception\ServiceException;
 
 final class ProcessPaymentFailedException extends ServiceException
 {
-    /**
-     * @psalm-suppress PossiblyUnusedMethod
-     */
-    public function getDescription(): string
+    public function __construct(string $message = 'Process payment failed')
     {
-        return 'Process payment failed';
+        parent::__construct($message);
     }
 
-    /**
-     * @psalm-suppress PossiblyUnusedMethod
-     */
+    public function getDescription(): string
+    {
+        return $this->message;
+    }
+
     public function getType(): string
     {
         return 'process_payment_failed';

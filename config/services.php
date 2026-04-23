@@ -1,5 +1,6 @@
 <?php
 
+use App\Infrastructure\EventListener\DomainExceptionListener;
 use App\Infrastructure\Validator\CountryExtractor;
 use App\Infrastructure\Validator\TaxNumberValidator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -13,9 +14,9 @@ return static function (ContainerConfigurator $container): void {
 
     $container->import('packages/*.php');
     $container->import('domain/*.php');
-    //    $container->import('infrastructure/*.php');
+    $container->import('infrastructure/*.php');
     $container->import('infrastructure/*/*.php');
-    //    $container->import('infrastructure/*/*/*.php');
+    $container->import('infrastructure/*/*/*.php');
 
     if ('test' === $container->env()) {
         $container->import('packages/test/*.php');
@@ -27,4 +28,9 @@ return static function (ContainerConfigurator $container): void {
         ->set(TaxNumberValidator::class)
         ->args([service(CountryExtractor::class)])
         ->tag('validator.constraint_validator');
+
+    $services->set(DomainExceptionListener::class)->tag('kernel.event_listener', [
+        'event' => 'kernel.exception',
+        'priority' => 100,
+    ]);
 };
